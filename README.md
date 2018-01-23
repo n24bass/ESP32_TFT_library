@@ -3,6 +3,12 @@
 
 ---
 
+**About this fork**
+
+This fork is modified for M5Stack.
+
+---
+
 **This library must be built with the latest esp-idf master branch and xtensa toolchain**
 
 If you are using the esp-idf v2.1, checkout the commit *0518df81a6566820352dad7bf6c539995d41ad18*
