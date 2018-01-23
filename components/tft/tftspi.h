@@ -23,10 +23,17 @@
 #define TP_CALY_STMPE610	11800144
 
 // === Screen orientation constants ===
+#if CONFIG_EXAMPLE_DISPLAY_TYPE == 3
+#define PORTRAIT	1
+#define LANDSCAPE	0
+#define PORTRAIT_FLIP	3
+#define LANDSCAPE_FLIP	2
+#else
 #define PORTRAIT	0
 #define LANDSCAPE	1
 #define PORTRAIT_FLIP	2
 #define LANDSCAPE_FLIP	3
+#endif
 
 #define DISP_TYPE_ILI9341	0
 #define DISP_TYPE_ILI9488	1
@@ -92,6 +99,35 @@
 #define PIN_NUM_BCKL 0  	// GPIO used for backlight control
 #define PIN_BCKL_ON  0  	// GPIO value for backlight ON
 #define PIN_BCKL_OFF 1  	// GPIO value for backlight OFF
+// ---------------------------------------------------------
+
+#elif CONFIG_EXAMPLE_DISPLAY_TYPE == 3
+
+// ** Set the correct configuration for M5Stack TFT
+// ---------------------------------------------------------
+#define DEFAULT_DISP_TYPE   DISP_TYPE_ILI9341
+#define DEFAULT_TFT_DISPLAY_WIDTH   320
+#define DEFAULT_TFT_DISPLAY_HEIGHT  240
+#define DISP_COLOR_BITS_24          0x66
+#define DEFAULT_GAMMA_CURVE         0
+#define DEFAULT_SPI_CLOCK           26000000
+#define TFT_INVERT_ROTATION         0
+#define TFT_INVERT_ROTATION1        0
+#define TFT_RGB_BGR                 0x08
+
+#define USE_TOUCH                   TOUCH_TYPE_NONE // TOUCH_TYPE_STMPE610
+
+#define PIN_NUM_MISO 0 // 19		// SPI MISO
+#define PIN_NUM_MOSI 23 // 18		// SPI MOSI
+#define PIN_NUM_CLK  18 // 5		// SPI CLOCK pin
+#define PIN_NUM_CS   14 // 15		// Display CS pin
+#define PIN_NUM_DC   27 // 33		// Display command/data pin
+#define PIN_NUM_TCS  32		// Touch screen CS pin (NOT used if USE_TOUCH=0)
+
+#define PIN_NUM_RST  33 // 0  	// GPIO used for RESET control (#16)
+#define PIN_NUM_BCKL 32 // 0  	// GPIO used for backlight control
+#define PIN_BCKL_ON  1 // 0  	// GPIO value for backlight ON
+#define PIN_BCKL_OFF 0 // 1  	// GPIO value for backlight OFF
 // ---------------------------------------------------------
 
 #else

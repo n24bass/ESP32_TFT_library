@@ -764,11 +764,35 @@ static void commandList(spi_lobo_device_handle_t spi, const uint8_t *addr) {
 
 //==================================
 void _tft_setRotation(uint8_t rot) {
-	uint8_t rotation = rot & 3; // can't be higher than 3
-	uint8_t send = 1;
-	uint8_t madctl = 0;
-	uint16_t tmp;
+  uint8_t rotation = rot & 3; // can't be higher than 3
+  uint8_t send = 1;
+  uint8_t madctl = 0;
+  uint16_t tmp;
 
+#if CONFIG_EXAMPLE_DISPLAY_TYPE == 3
+  switch (rotation) {
+  case PORTRAIT:
+    madctl = TFT_RGB_BGR;
+    _width = DEFAULT_TFT_DISPLAY_WIDTH;
+    _height = DEFAULT_TFT_DISPLAY_HEIGHT;
+    break;
+  case LANDSCAPE:
+    madctl = (MADCTL_MY | MADCTL_MV | TFT_RGB_BGR);
+    _width = DEFAULT_TFT_DISPLAY_HEIGHT;
+    _height = DEFAULT_TFT_DISPLAY_WIDTH;
+    break;
+  case PORTRAIT_FLIP:
+    madctl = (MADCTL_MX | MADCTL_MY | TFT_RGB_BGR);
+    _width = DEFAULT_TFT_DISPLAY_WIDTH;
+    _height = DEFAULT_TFT_DISPLAY_HEIGHT;
+    break;
+  case LANDSCAPE_FLIP:
+    madctl = (MADCTL_MV | MADCTL_MX | TFT_RGB_BGR);
+    _width = DEFAULT_TFT_DISPLAY_HEIGHT;
+    _height = DEFAULT_TFT_DISPLAY_WIDTH;
+    break;
+  }
+#else
     if ((rotation & 1)) {
         // in landscape modes must be width > height
         if (_width < _height) {
@@ -831,6 +855,7 @@ void _tft_setRotation(uint8_t rot) {
         break;
     }
     #endif
+#endif
 	if (send) {
 		if (disp_select() == ESP_OK) {
 			disp_spi_transfer_cmd_data(TFT_MADCTL, &madctl, 1);
