@@ -7,6 +7,8 @@
 
 This fork is modified for M5Stack.
 
+Now, it was officially supported. https://github.com/m5stack/ESP32_TFT_library
+
 ---
 
 **This library must be built with the latest esp-idf master branch and xtensa toolchain**
